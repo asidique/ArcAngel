@@ -19,7 +19,7 @@ app.use((req, res, next) => {
 });
 
 conversation(app);
-//speechtotext(app);
+speechtotext(app);
 
 
 app.listen(3002, () => console.log("Listening on 3002"));
