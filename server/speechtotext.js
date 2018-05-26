@@ -42,6 +42,7 @@ module.exports = function(app){
     const languageCode = 'en-US';
 
     const request = {
+      singleUtterance: true,
       config: {
         encoding: encoding,
         sampleRateHertz: sampleRateHertz,
@@ -49,6 +50,8 @@ module.exports = function(app){
       },
       interimResults: false, // If you want interim results, set this to true
     };
+
+
 
     // Create a recognize stream
     const recognizeStream = client
@@ -59,19 +62,29 @@ module.exports = function(app){
           data.results[0] && data.results[0].alternatives[0]
             ? `Transcription: ${data.results[0].alternatives[0].transcript}\n`
             : `\n\nReached transcription time limit, press Ctrl+C\n`
-        )
-        $.getJSON("http://api.ipify.org/?format=json", function(e) {
-          var ip = e.ip.toString().replace(/\./g, "");
+        );
+        require("jsdom").env("", function(err, window) {
 
-            var datetime = new Date(Date.now()).toLocaleString();
-          firebase.database().ref('Logins/' + ip + "/Logs/").set({
-            datetime: data.results[0].alternatives[0].transcript
+          if (err) {
+              console.error(err);
+              return;
+          }
+          var $ = require("jquery")(window);
+          $.getJSON("http://api.ipify.org/?format=json", function(e) {
+            var ip = e.ip.toString().replace(/\./g, "");
+
+              var datetime = new Date(Date.now()).toLocaleString();
+            firebase.database().ref('Logins/' + ip + "/Logs/" + datetime).set({
+              Message: data.results[0].alternatives[0].transcript
+            });
           });
         });
-
       }
-
       );
+
+
+
+
 
     // Start recording and send the microphone input to the Speech API
     record
