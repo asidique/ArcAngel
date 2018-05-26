@@ -1,4 +1,4 @@
-[
+var symptoms = [
   {
     "ID": 188,
     "Name": "Abdominal guarding"
@@ -1108,3 +1108,4 @@
     "Name": "Yellowish discoloration of the white part of the eye"
   }
 ]
+export default symptoms;
