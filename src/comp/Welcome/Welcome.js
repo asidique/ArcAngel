@@ -15,14 +15,7 @@ function animateFillBox(ref) {
   }, 700);
 }
 
-
-
-
-
-
 class Welcome extends React.Component {
-
-
 
   constructor(props) {
     super(props);

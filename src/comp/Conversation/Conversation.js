@@ -1,6 +1,9 @@
 import React from 'react'
 import './Conversation.css'
 import allSymptoms from '../../resources/symptoms.js'
+import Profile from '../Profile/Profile'
+import $ from 'jquery';
+
 var symptomMap = null;
 var userSymptoms = [];
 var totalDiagnosis=[];
@@ -139,18 +142,27 @@ function allSymptomsToMap(){
 }
 
 
+var thisRef;
 
-class Welcome extends React.Component {
+class Conversation extends React.Component {
 
     constructor(props) {
       super(props);
       this.state = {
-        input: ''
+        input: '',
+        IP: 0
       };
       this.handleMessage = this.handleMessage.bind(this);
       this.updateInput = this.updateInput.bind(this);
+      thisRef = this;
       //console.log(allSymptoms);
       allSymptomsToMap();
+
+    }
+
+    componentDidUpdate() {
+
+
 
     }
 
@@ -161,7 +173,6 @@ class Welcome extends React.Component {
 
     updateInput(e) {
       this.setState({input: e.target.value});
-
     }
 
 
@@ -170,7 +181,7 @@ class Welcome extends React.Component {
       return(
         <div className="Conversation-Background">
           <div className="Conversation-LeftPane">
-            <img className="Conversation-LeftPane-Pic" src='images/overview.png' />
+            <Profile IP={this.state.IP} />
           </div>
           <p className="Conversation-LeftPane-Name">Welcome Amr</p>
           <div className="Conversation-Message">
@@ -182,6 +193,7 @@ class Welcome extends React.Component {
               </label>
               <button type="button" onClick={this.handleMessage}>Enter</button>
             </form>
+
           </div>
         </div>
       )
@@ -189,4 +201,4 @@ class Welcome extends React.Component {
 }
 
 
-export default Welcome;
+export default Conversation;

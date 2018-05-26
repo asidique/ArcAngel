@@ -1,16 +1,36 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var app = express();
-
+const $ = require("jquery");
 
 const record = require('node-record-lpcm16');
 
 // Imports the Google Cloud client library
 const speech = require('@google-cloud/speech');
 
-modules.export(app){
+var firebase = require('firebase');
 
-  app.get('/speech', function(req, res){
+var config = {
+  apiKey: "AIzaSyDXGdgxjWA4ze1NfgF3hPUBbCciceBfxSw",
+  authDomain: "project-red-9c089.firebaseapp.com",
+  databaseURL: "https://project-red-9c089.firebaseio.com",
+  projectId: "project-red-9c089",
+  storageBucket: "",
+  messagingSenderId: "664289493194"
+};
+
+firebase.initializeApp(config);
+
+firebase.auth().signInWithEmailAndPassword("sidiqueafg@gmail.com", "projectred").catch(function(error) {
+  // Handle Errors here.
+  var errorCode = error.code;
+  var errorMessage = error.message;
+  // ...
+});
+
+module.exports = function(app){
+
+  app.get('/startspeech', function(req, res){
     // Creates a client
     const client = new speech.SpeechClient();
 
@@ -22,6 +42,7 @@ modules.export(app){
     const languageCode = 'en-US';
 
     const request = {
+      singleUtterance: true,
       config: {
         encoding: encoding,
         sampleRateHertz: sampleRateHertz,
@@ -30,17 +51,40 @@ modules.export(app){
       interimResults: false, // If you want interim results, set this to true
     };
 
+
+
     // Create a recognize stream
     const recognizeStream = client
       .streamingRecognize(request)
       .on('error', console.error)
-      .on('data', data =>
+      .on('data', function(data){
         process.stdout.write(
           data.results[0] && data.results[0].alternatives[0]
             ? `Transcription: ${data.results[0].alternatives[0].transcript}\n`
             : `\n\nReached transcription time limit, press Ctrl+C\n`
-        )
+        );
+        require("jsdom").env("", function(err, window) {
+
+          if (err) {
+              console.error(err);
+              return;
+          }
+          var $ = require("jquery")(window);
+          $.getJSON("http://api.ipify.org/?format=json", function(e) {
+            var ip = e.ip.toString().replace(/\./g, "");
+
+              var datetime = new Date(Date.now()).toLocaleString();
+            firebase.database().ref('Logins/' + ip + "/Logs/" + datetime).set({
+              Message: data.results[0].alternatives[0].transcript
+            });
+          });
+        });
+      }
       );
+
+
+
+
 
     // Start recording and send the microphone input to the Speech API
     record
