@@ -21,9 +21,6 @@ class App extends Component {
       IP: ""
     }
 
-
-
-
     var thisRef = this;
 
     var config = {

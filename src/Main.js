@@ -9,7 +9,7 @@ class Main extends React.Component {
       <main>
         <Switch>
           <Route path="/Home" component={Welcome} />
-          <Route path="/Conversation" component={Conversation}/>
+          <Route path="/Conversation/:uid" component={Conversation}/>
         </Switch>
       </main>
     )

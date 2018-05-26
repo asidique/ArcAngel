@@ -11,7 +11,7 @@ function animateFillBox(ref) {
 
   setTimeout(function() {
     //your code to be executed after 1 second
-    ref.props.history.push("/Profiles/"+ref.state.UID+"/Overview", null)
+    ref.props.history.push("/Conversation/"+ref.state.UID, null)
   }, 700);
 }
 
