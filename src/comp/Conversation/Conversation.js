@@ -156,7 +156,7 @@ class Welcome extends React.Component {
 
     handleMessage() {
       press(this.state.input);
-      getAPIMedic();
+    //  getAPIMedic();
     }
 
     updateInput(e) {
