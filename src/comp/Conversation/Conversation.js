@@ -3,6 +3,8 @@ import './Conversation.css'
 import allSymptoms from '../../resources/symptoms.js'
 var symptomMap = null;
 var userSymptoms = [];
+var totalDiagnosis=[];
+var diagnosisMap = null;
 function press(input) {
   console.log(input);
   userSymptoms = [];
@@ -17,10 +19,11 @@ function press(input) {
           console.log(data.output.text);
           var symptom= data.output.text[0];
           symptom = symptom.charAt(0).toUpperCase() + symptom.substring(1);
+          console.log(parseInt(symptomMap.get(symptom)))
           if(symptomMap.get(symptom) == null ){
             userSymptoms.push(-1);
           }else{
-            console.log(parseInt(symptomMap.get(symptom)) + 1000)
+
             userSymptoms.push(parseInt(symptomMap.get(symptom)));
           }
           if(userSymptoms.length == parsedInput.length){
@@ -39,23 +42,93 @@ for(var i in userSymptoms){
   }
 }
 }
-function getAPIMedic() {
-  console.log('fetching')
-  var token =
-  'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImFzc2VlbEBteS55b3JrdS5jYSIsInJvbGUiOiJVc2VyIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvc2lkIjoiMzEwMiIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvdmVyc2lvbiI6IjIwMCIsImh0dHA6Ly9leGFtcGxlLm9yZy9jbGFpbXMvbGltaXQiOiI5OTk5OTk5OTkiLCJodHRwOi8vZXhhbXBsZS5vcmcvY2xhaW1zL21lbWJlcnNoaXAiOiJQcmVtaXVtIiwiaHR0cDovL2V4YW1wbGUub3JnL2NsYWltcy9sYW5ndWFnZSI6ImVuLWdiIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9leHBpcmF0aW9uIjoiMjA5OS0xMi0zMSIsImh0dHA6Ly9leGFtcGxlLm9yZy9jbGFpbXMvbWVtYmVyc2hpcHN0YXJ0IjoiMjAxOC0wMy0yOCIsImlzcyI6Imh0dHBzOi8vc2FuZGJveC1hdXRoc2VydmljZS5wcmlhaWQuY2giLCJhdWQiOiJodHRwczovL2hlYWx0aHNlcnZpY2UucHJpYWlkLmNoIiwiZXhwIjoxNTI3MzUzNzM4LCJuYmYiOjE1MjczNDY1Mzh9.1POvK2YN9PTae_OgUwv1xd_Yp2VZnvnLO-cTDPGHpog';
-  var gender = "male";
-  var year_of_birth = 1996;
-  var symptoms = userSymptoms;
 
-  fetch('https://sandbox-healthservice.priaid.ch/diagnosis?token=' + token + '&symptoms=' + JSON.stringify(symptoms) + '&gender='+gender + '&year_of_birth='+year_of_birth + '&language=en-gb', {
-    method: 'GET'
-  })
-    .then(function(response) {
-      response.json().then(function(data) {
-        console.log(data);
-          console.log('complete')
-      })
+function combination (arr) {
+
+  let i, j, temp
+  let result = []
+  let arrLen = arr.length
+  let power = Math.pow
+  let combinations = power(2, arrLen)
+
+  // Time & Space Complexity O (n * 2^n)
+
+  for (i = 0; i < combinations;  i++) {
+    temp = []
+
+    for (j = 0; j < arrLen; j++) {
+      // & is bitwise AND
+      if ((i & power(2, j))) {
+        temp.push(arr[j])
+      }
+    }
+    result.push(temp)
+  }
+  return result
+}
+
+function getAPIMedic() {
+  totalDiagnosis=[];
+  var symptoms = combination(userSymptoms);
+  var count = 1;
+  //console.log(symptoms)
+  for(var i=1;i<symptoms.length;i++){
+    var symptom = symptoms[i];
+    //console.log('fetching')
+    var token =
+    'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImFzc2VlbEBteS55b3JrdS5jYSIsInJvbGUiOiJVc2VyIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvc2lkIjoiMzEwMiIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvdmVyc2lvbiI6IjIwMCIsImh0dHA6Ly9leGFtcGxlLm9yZy9jbGFpbXMvbGltaXQiOiI5OTk5OTk5OTkiLCJodHRwOi8vZXhhbXBsZS5vcmcvY2xhaW1zL21lbWJlcnNoaXAiOiJQcmVtaXVtIiwiaHR0cDovL2V4YW1wbGUub3JnL2NsYWltcy9sYW5ndWFnZSI6ImVuLWdiIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9leHBpcmF0aW9uIjoiMjA5OS0xMi0zMSIsImh0dHA6Ly9leGFtcGxlLm9yZy9jbGFpbXMvbWVtYmVyc2hpcHN0YXJ0IjoiMjAxOC0wMy0yOCIsImlzcyI6Imh0dHBzOi8vc2FuZGJveC1hdXRoc2VydmljZS5wcmlhaWQuY2giLCJhdWQiOiJodHRwczovL2hlYWx0aHNlcnZpY2UucHJpYWlkLmNoIiwiZXhwIjoxNTI3MzY2ODk1LCJuYmYiOjE1MjczNTk2OTV9.fW2JzcYGqVSQtRVckdqGb2XGGkT_Tss1JQVe_KBbZns'
+    var gender = "male";
+    var year_of_birth = 1996;
+
+
+    fetch('https://sandbox-healthservice.priaid.ch/diagnosis?token=' + token + '&symptoms=' + JSON.stringify(symptom) + '&gender='+gender + '&year_of_birth='+year_of_birth + '&language=en-gb', {
+      method: 'GET'
     })
+      .then(function(response) {
+        response.json().then(function(data) {
+          count+=1;
+        //  console.log(data);
+          totalDiagnosis.push(data);
+            //console.log('complete')
+          //  console.log(totalDiagnosis)
+            if(count == symptoms.length){
+              findDiagnosis();
+            }
+
+        })
+      })
+  }
+
+}
+
+function findDiagnosis(){
+  diagnosisMap = new Map();
+//  console.log("diag: "+totalDiagnosis);
+  var max = 0, maxD='', second = 0, secondD='';
+  for(var i in totalDiagnosis){
+    if(totalDiagnosis[i].length != 0){
+      for(var j  = totalDiagnosis[i].length-1; j>=0;j--){
+        if(totalDiagnosis[i][j].length !=0){
+          var name = totalDiagnosis[i][j].Issue.Name+" ("+totalDiagnosis[i][j].Issue.ProfName+")";
+          var accuracy = totalDiagnosis[i][j].Issue.Accuracy;
+          var total = 0;
+          if(diagnosisMap.get(name)!=null){
+            total = diagnosisMap.get(name);
+          }
+          total += accuracy;
+          if(total>=max&&maxD!=name){
+            second = max;
+            secondD = maxD;
+            max = total;
+            maxD = name;
+          }
+          diagnosisMap.set(name,total);
+        }
+      }
+    }
+  }
+  console.log("1: "+maxD+" "+max)
+  console.log("2: "+secondD+" "+second)
 }
 function allSymptomsToMap(){
   symptomMap = new Map();
