@@ -12,7 +12,7 @@ function animateFillBox(ref) {
   setTimeout(function() {
     //your code to be executed after 1 second
     console.log(ref.state.UID);
-    ref.props.history.push("/Profiles/"+ref.state.UID, null)
+    ref.props.history.push("/Profiles/"+ref.state.UID + "/Overview", null)
   }, 700);
 }
 
@@ -46,13 +46,11 @@ class Welcome extends React.Component {
       firebase.database().ref('Logins/' + thisRef.state.IP).on('value', function(snap) {
         if(initialDataLoaded) {
           var arr = (Object.values(snap.val()));
-          //console.log(thisRef.state.IP)
           var index = arr.length;
           thisRef.setState({
             UID: arr[index-3].UID,
             IP: thisRef.state.IP
           })
-          //console.log(thisRef);
           animateFillBox(thisRef);
         }
       });
