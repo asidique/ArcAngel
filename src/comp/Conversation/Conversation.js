@@ -81,9 +81,11 @@ function formSymptomsMessage(){
     res += parseInt(i)+1+'. '+wordSymptoms[i]+'<br>';
   }
   res+='If these symptoms are wrong, try rephrasing.'
+  console.log(res);
 }
 function formDiagnosisMessage(){
-
+  var str = 'You might have '+ firstDiagnosis + ' or ' + secondDiagnosis+'.';
+  console.log(str);
 }
 
 function getAPIMedic() {
