@@ -3,7 +3,6 @@ import './Conversation.css'
 import allSymptoms from '../../resources/symptoms.js'
 import Profile from '../Profile/Profile'
 import $ from 'jquery';
-import firebase from '../firebase'
 
 var symptomMap = null;
 var userSymptoms = [];
@@ -13,15 +12,16 @@ var wordSymptoms = [];
 var firstDiagnosis;
 var secondDiagnosis;
 
-var globalHistory;
-var firstRun = true;
-
 function press(input) {
+<<<<<<< HEAD
   var datetime = new Date(Date.now()).toLocaleString().replace(/\//g, "-");
   firebase.database().ref('Logins/' + thisRef.state.IP + "/Logs/" + datetime.toString()).set({
     Message: input,
     AI: 0
   });
+=======
+  console.log(input);
+>>>>>>> origin/master
   userSymptoms = [];
    wordSymptoms = [];
   var parsedInput = input.split('and');
@@ -32,7 +32,7 @@ function press(input) {
     })
       .then(function(response) {
         response.json().then(function(data) {
-          console.log("DATA OUTPUT TEXT: " + data.output.text);
+          console.log(data.output.text);
           var symptom= data.output.text[0];
           symptom = symptom.charAt(0).toUpperCase() + symptom.substring(1);
           wordSymptoms.push(symptom);
@@ -114,7 +114,12 @@ function getAPIMedic() {
   for(var i=1;i<symptoms.length;i++){
     var symptom = symptoms[i];
     //console.log('fetching')
+<<<<<<< HEAD
     var token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImFzc2VlbEBteS55b3JrdS5jYSIsInJvbGUiOiJVc2VyIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvc2lkIjoiMzEwMiIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvdmVyc2lvbiI6IjIwMCIsImh0dHA6Ly9leGFtcGxlLm9yZy9jbGFpbXMvbGltaXQiOiI5OTk5OTk5OTkiLCJodHRwOi8vZXhhbXBsZS5vcmcvY2xhaW1zL21lbWJlcnNoaXAiOiJQcmVtaXVtIiwiaHR0cDovL2V4YW1wbGUub3JnL2NsYWltcy9sYW5ndWFnZSI6ImVuLWdiIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9leHBpcmF0aW9uIjoiMjA5OS0xMi0zMSIsImh0dHA6Ly9leGFtcGxlLm9yZy9jbGFpbXMvbWVtYmVyc2hpcHN0YXJ0IjoiMjAxOC0wMy0yOCIsImlzcyI6Imh0dHBzOi8vc2FuZGJveC1hdXRoc2VydmljZS5wcmlhaWQuY2giLCJhdWQiOiJodHRwczovL2hlYWx0aHNlcnZpY2UucHJpYWlkLmNoIiwiZXhwIjoxNTI3NDEzMTM3LCJuYmYiOjE1Mjc0MDU5Mzd9.ZbMyoC4IaADLbcIOH83nQXvfIq73IQfU0N2VL1NUOG0'
+=======
+    var token =
+    'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImFzc2VlbEBteS55b3JrdS5jYSIsInJvbGUiOiJVc2VyIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvc2lkIjoiMzEwMiIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvdmVyc2lvbiI6IjIwMCIsImh0dHA6Ly9leGFtcGxlLm9yZy9jbGFpbXMvbGltaXQiOiI5OTk5OTk5OTkiLCJodHRwOi8vZXhhbXBsZS5vcmcvY2xhaW1zL21lbWJlcnNoaXAiOiJQcmVtaXVtIiwiaHR0cDovL2V4YW1wbGUub3JnL2NsYWltcy9sYW5ndWFnZSI6ImVuLWdiIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9leHBpcmF0aW9uIjoiMjA5OS0xMi0zMSIsImh0dHA6Ly9leGFtcGxlLm9yZy9jbGFpbXMvbWVtYmVyc2hpcHN0YXJ0IjoiMjAxOC0wMy0yOCIsImlzcyI6Imh0dHBzOi8vc2FuZGJveC1hdXRoc2VydmljZS5wcmlhaWQuY2giLCJhdWQiOiJodHRwczovL2hlYWx0aHNlcnZpY2UucHJpYWlkLmNoIiwiZXhwIjoxNTI3MzY2ODk1LCJuYmYiOjE1MjczNTk2OTV9.fW2JzcYGqVSQtRVckdqGb2XGGkT_Tss1JQVe_KBbZns'
+>>>>>>> origin/master
     var gender = "male";
     var year_of_birth = 1996;
 
@@ -169,8 +174,11 @@ function findDiagnosis(){
   console.log("2: "+secondD+" "+second)
   firstDiagnosis = maxD;
   secondDiagnosis = secondD;
+<<<<<<< HEAD
   updateFB(formSymptomsMessage());
 
+=======
+>>>>>>> origin/master
 }
 function allSymptomsToMap(){
   symptomMap = new Map();
@@ -190,8 +198,7 @@ class Conversation extends React.Component {
       this.state = {
         input: '',
         IP: 0,
-        visibleMessage: false,
-        currentConvo: []
+        visibleMessage: false
       };
       this.handleMessage = this.handleMessage.bind(this);
       this.updateInput = this.updateInput.bind(this);
@@ -201,38 +208,6 @@ class Conversation extends React.Component {
       thisRef = this;
       //console.log(allSymptoms);
       allSymptomsToMap();
-
-
-
-    }
-
-    componentDidMount() {
-      $.getJSON("http://api.ipify.org/?format=json", function(e) {
-        thisRef.setState({
-          IP: e.ip.toString().replace(/\./g, "")
-        })
-        var dbRef = firebase.database().ref('Logins/' + thisRef.state.IP + "/Logs/");
-          dbRef.on('value', function(snapshot) {
-            thisRef.setState({
-              currentConvo: Object.values(snapshot.val())
-            })
-            globalHistory = snapshot.val();
-
-            //thisRef.render();
-
-            //  console.log("This is the latest message: " + Object.values(msgArray)[Object.values(msgArray).length-1].Message);
-            /*var msgArray = snapshot.val();
-            console.log(Object.keys(msgArray));
-
-            var datetimeBefore = Date.now() - 30000;
-            console.log(new Date(datetimeBefore).toLocaleString());
-            console.log(Object.keys(msgArray)[Object.keys(msgArray).length-1]);
-            if(Object.keys(msgArray)[msgArray.length-1] > new Date(datetimeBefore).toLocaleString()) {
-              console.log("This is the message:");
-              console.log(Object.values(msgArray)[msgArray-1]);
-            }*/
-          });
-      });
 
     }
 
@@ -253,7 +228,7 @@ class Conversation extends React.Component {
       })
         .then(function(response) {
           //console.log(response);
-          /*firebase.database().ref('Logins/' + thisRef.state.IP).once('value', function(snap) {
+        /*  firebase.database().ref('Logins/' + thisRef.state.IP).once('value', function(snap) {
             initialDataLoaded = true;
           });*/
         })
@@ -270,6 +245,7 @@ class Conversation extends React.Component {
       this.setState({input: e.target.value});
     }
 
+<<<<<<< HEAD
     handleKeyPress = (e) => {
       if(e.key == 'Enter') {
         this.setState({input: e.target.value});
@@ -281,6 +257,9 @@ class Conversation extends React.Component {
     <p className="Conversation-Bubble-Text">EIGJAEOIGHEIGJAEOIGHOIAEHGOAIEOIAEHGOAIEEIGJAEOIGHOIAEHGOAIEEIGJAEOIGHOIAEHGOAIEEIGJAEOIGHOIAEHGOAIEEIGJAEOIGHOIAEHGOAIEEIGJAEOIGHOIAEHGOAIE</p>
     <p className="Conversation-Bubble-TextAI">EIGJAEOIGHEIGJAEOIGHOIAEHGOAIEOIAEHGOAIEEIGJAEOIGHOIAEHGOAIEEIGJAEOIGHOIAEHGOAIEEIGJAEOIGHOIAEHGOAIEEIGJAEOIGHOIAEHGOAIEEIGJAEOIGHOIAEHGOAIE</p>
     */
+=======
+    /*  <Profile IP={this.state.IP} />*/
+>>>>>>> origin/master
 
 
     render() {
@@ -288,6 +267,7 @@ class Conversation extends React.Component {
         <div className="Conversation-Background">
           <div className="Conversation-Container">
             <div className="Conversation-View">
+<<<<<<< HEAD
             {
               this.state.currentConvo.map((index, i) => {
                 if(this.state.currentConvo[i].AI == 0) {
@@ -308,6 +288,11 @@ class Conversation extends React.Component {
               })
             }
 
+=======
+              <p className="Conversation-Bubble-Text">EIGJAEOIGHEIGJAEOIGHOIAEHGOAIEOIAEHGOAIEEIGJAEOIGHOIAEHGOAIEEIGJAEOIGHOIAEHGOAIEEIGJAEOIGHOIAEHGOAIEEIGJAEOIGHOIAEHGOAIEEIGJAEOIGHOIAEHGOAIE</p>
+              <div class="clear"></div>
+              <p className="Conversation-Bubble-TextAI">EIGJAEOIGHEIGJAEOIGHOIAEHGOAIEOIAEHGOAIEEIGJAEOIGHOIAEHGOAIEEIGJAEOIGHOIAEHGOAIEEIGJAEOIGHOIAEHGOAIEEIGJAEOIGHOIAEHGOAIEEIGJAEOIGHOIAEHGOAIE</p>
+>>>>>>> origin/master
             </div>
             <button className="Conversation-MessageIcon-Holder" onClick={this.toggleVisibleMessage}>
             <img src="/images/message2.png" className="Conversation-MessageIcon"/>
