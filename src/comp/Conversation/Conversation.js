@@ -62,6 +62,7 @@ function updateFB(sym) {
     AI: 1
   });
 }
+
 function removeUnkownSymptoms(){
 for(var i in userSymptoms){
   if(userSymptoms[i]==-1){
@@ -104,7 +105,7 @@ function formSymptomsMessage(){
 }
 function formDiagnosisMessage(){
   var str = 'My first diagnosis is that you have '+ firstDiagnosis + '. There are also signs of ' + secondDiagnosis+'.';
-  console.log(str);
+  return str;
 }
 
 function getAPIMedic() {
@@ -171,7 +172,9 @@ function findDiagnosis(){
   firstDiagnosis = maxD;
   secondDiagnosis = secondD;
   updateFB(formSymptomsMessage());
-
+  if(firstDiagnosis == null || firstDiagnosis == "" && secondDiagnosis == null || secondDiagnosis == "") {
+    updateFB(formDiagnosisMessage());
+  }
 }
 function allSymptomsToMap(){
   symptomMap = new Map();
