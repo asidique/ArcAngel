@@ -1,6 +1,5 @@
 import React from 'react'
 import './Prescription.css'
-import {Glyphicon} from 'react-bootstrap'
 
 class Prescription extends React.Component {
   //constructor(props) {
