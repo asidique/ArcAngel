@@ -17,8 +17,9 @@ var globalHistory;
 var firstRun = true;
 
 function press(input) {
-  var datetime = new Date(Date.now()).toLocaleString().replace(/\//g, "-");
-  firebase.database().ref('Logins/' + thisRef.state.IP + "/Logs/" + datetime.toString()).set({
+  //var datetime = new Date(Date.now()).toLocaleString().replace(/\//g, "-");
+  var datetime = Date.now();
+  firebase.database().ref('Logins/' + thisRef.state.IP + "/Logs/"  + datetime.toString()).set({
     Message: input,
     AI: 0
   });
@@ -54,8 +55,8 @@ function press(input) {
 }
 
 function updateFB(sym) {
-  var datetime = new Date(Date.now()).toLocaleString().replace(/\//g, "-");
-
+  //var datetime = new Date(Date.now()).toLocaleString().replace(/\//g, "-");
+  var datetime = Date.now();
   firebase.database().ref('Logins/' + thisRef.state.IP + "/Logs/" + datetime.toString()).set({
     Message: sym,
     AI: 1
@@ -309,15 +310,17 @@ class Conversation extends React.Component {
             }
 
             </div>
+            <div id="messageForm" type="text" className="Conversation-MessageForm">
+                <input type="text"  onKeyPress={this.handleKeyPress}  name="name" className={this.state.visibleMessage ? "Conversation-MessageForm-Input" : "Conversation-MessageForm-Hidden"} onChange={this.updateInput} />
+                <button type="button" onClick={this.handleMessage} className={this.state.visibleMessage ? "Conversation-MessageForm-InputButton btn btn-primary" : "Conversation-MessageForm-InputButton-Hidden"}>Enter</button>
+            </div>
+            <div className="Conversation-MessageIcon-Container">
             <button className="Conversation-MessageIcon-Holder" onClick={this.toggleVisibleMessage}>
             <img src="/images/message2.png" className="Conversation-MessageIcon"/>
             </button>
             <button className="Conversation-MessageIcon-Holder" onClick={this.startRecording}>
             <img src="/images/microphone.png" className="Conversation-MessageIcon"/>
             </button>
-            <div id="messageForm" type="text" className="Conversation-MessageForm">
-                <input type="text"  onKeyPress={this.handleKeyPress}  name="name" className={this.state.visibleMessage ? "Conversation-MessageForm-Input" : "Conversation-MessageForm-Hidden"} onChange={this.updateInput} />
-              <button type="button" onClick={this.handleMessage} className={this.state.visibleMessage ? "Conversation-MessageForm-InputButton" : "Conversation-MessageForm-InputButton-Hidden"}>Enter</button>
             </div>
           </div>
         </div>

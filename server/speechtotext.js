@@ -73,7 +73,8 @@ module.exports = function(app){
           $.getJSON("http://api.ipify.org/?format=json", function(e) {
             var ip = e.ip.toString().replace(/\./g, "");
 
-            var datetime = new Date(Date.now()).toLocaleString().replace(/\//g, "-");
+          //  var datetime = new Date(Date.now()).toLocaleString().replace(/\//g, "-");
+            var datetime = Date.now();
             firebase.database().ref('Logins/' + ip + "/Logs/" + datetime).set({
               Message: data.results[0].alternatives[0].transcript,
               AI: 0

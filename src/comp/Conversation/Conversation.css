@@ -1,5 +1,7 @@
 
-
+* {
+  overflow-x: hidden;
+}
 .Conversation-Background {
   margin-left: 15em;
   padding: 1.5em;
@@ -23,7 +25,7 @@
 .Conversation-View {
   margin: 1em;
   background-color: rgb(240, 240, 240);
-  height: 35em;
+  height: 40em;
   padding: 3em;
   width: auto;
   overflow-y: scroll;
@@ -58,9 +60,8 @@
 .Conversation-MessageForm {
   display: block;
   width: 100%;
-  margin-left: 25%;
   transition: 0.5s;
-  text-align: left;
+  text-align: center;
 }
 
 .Conversation-MessageForm-Hidden {
@@ -70,10 +71,17 @@
 }
 
 .Conversation-MessageForm-Input {
-  display: block;
+  display: inline-block;
   width: 25em;
-  text-align: center;
   transition: 0.5s;
+  padding: 0.5em;
+  border-radius: 15px;
+  border: 2px solid black;
+  margin: 0 auto;
+}
+
+.Conversation-MessageForm-Input:hover {
+  border-color: rgb(11, 147, 246, 0.8);
 }
 
 .Conversation-MessageIcon {
@@ -85,8 +93,7 @@
 
 .Conversation-MessageIcon-Holder {
   width: auto;
-  margin: 0 auto;
-  display: block;
+  display: inline-block;
   background: none;
   border: 0;
   border-radius: 20px;
@@ -104,9 +111,21 @@
 }
 
 .Conversation-MessageForm-InputButton {
+  display: inline-block;
+  text-align: center;
+  margin: 0 auto;
+  margin-top: 0.5em;
+  margin-bottom: 0.75em;
+  margin-left: 0.5em;
+  border: 2px solid black !important;
 }
 
 .Conversation-MessageForm-InputButton-Hidden {
   display: none;
   transition: 0.5s;
+}
+.Conversation-MessageIcon-Container {
+  display: block;
+  width: 100%;
+  text-align: center;
 }
