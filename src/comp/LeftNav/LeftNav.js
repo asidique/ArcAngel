@@ -41,6 +41,7 @@ class LeftNav extends React.Component {
     if(pass !== undefined && pass !== null && pass.length !== 0)  {
       if(pass === "arkangel" || pass === "doctor") {
         this.props.verify(true);
+        this.props.history.push("/Profiles/"+this.state.UID + "/Overview", null);
         return true;
       }
     }

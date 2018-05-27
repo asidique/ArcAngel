@@ -4,34 +4,40 @@ import './Medical.css'
 class Medical extends React.Component {
   constructor(props) {
     super(props);
-    console.log(this.props.verify);
+    this.state = {
+      verify: false
+    }
+
+    //this.update = this.update.bind(this);
   }
 
+  //update(e) {
+  //  this.props.passPassword(true);
+  //}
+
   render() {
-    if(this.props.verify) {
+    if(true) {
     return(
       <div className="Overview">
         <div className="card">
           <div className="card-header">Symptom Report</div>
           <div className="card-body">
-            <p>Here will me a list of symptoms from the past</p>
-            <p>User should be able to add a symptom and be updated here</p>
+            <p>Coughing, Abdominal Pain</p>
             <button className="btn btn-primary">Add New</button>
           </div>
         </div>
         <div className="card">
           <div className="card-header">Immunizations</div>
           <div className="card-body">
-            <p>Hepatits B, Date</p>
-            <p>Diphtheria, Date</p>
-            <p>Polio, Date</p>
-            <p>This should prob be a table</p>
+            <p>Hepatits B, Jan 1 1999</p>
+            <p>Diphtheria, Jan 1 2005</p>
+            <p>Polio, Feb 25 2013</p>
           </div>
         </div>
         <div className="card">
           <div className="card-header">Blood Type</div>
           <div className="card-body">
-            <p>AB+</p>
+            <p>B+</p>
           </div>
         </div>
         <div className="card">
@@ -45,7 +51,7 @@ class Medical extends React.Component {
           <div className="card-header">Diagnosis</div>
           <div className="card-body">
             <p>Low Iron Deficiency</p>
-            <p>XYZ Disease</p>
+            <p></p>
           </div>
         </div>
       </div>

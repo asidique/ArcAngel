@@ -29,15 +29,24 @@ react components
       verify: false
     }
     this.verifyPassword = this.verifyPassword.bind(this);
+    this.passPassword = this.passPassword.bind(this);
   }
 
   verifyPassword(a) {
-    console.log('getting called with value of:' + a);
+    /*console.log('getting called with value of:' + a);
     this.setState({
       verify: true
     })
     this.forceUpdate();
-    console.log(this.state.verify);
+    console.log(this.state.verify);*/
+    verified = a;
+    console.log(verified);
+  }
+
+  passPassword(a) {
+    this.setState({
+      verify: a
+    })
   }
 
   render() {
@@ -46,7 +55,7 @@ react components
         <LeftNav UID={this.state.UID} verify={this.verifyPassword} />
         <Switch>
           <Route path={"/Profiles/"+this.state.UID+"/Overview"} component={Overview}   />
-          <Route path={"/Profiles/"+this.state.UID+"/Medical"} component={Medical} verify={this.state.verify} />
+          <Route path={"/Profiles/"+this.state.UID+"/Medical"} component={Medical} />
           <Route path={"/Profiles/"+this.state.UID+"/Emergency"} component={Emergency} />
           <Route path={"/Profiles/"+this.state.UID+"/Appointments"} component={Appointments} />
           <Route path={"/Profiles/"+this.state.UID+"/Lab"} component={Lab} />
