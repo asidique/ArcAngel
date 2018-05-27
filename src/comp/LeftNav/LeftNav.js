@@ -96,7 +96,7 @@ class LeftNav extends React.Component {
             <p className="Emergency">Emergency</p>
           </div>
           </a>
-          <a href={"/Profiles/"+this.props.UID+"/Arkangel"}>
+          <a href={"/Profiles/"+this.props.UID+"/Conversation"}>
           <div className="LeftNav-Item Arkangel">
             <img alt="Could not load" src="/images/arkangel.png"/>
             <p>ArcAngel</p>

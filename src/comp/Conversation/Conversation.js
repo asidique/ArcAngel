@@ -168,26 +168,48 @@ class Conversation extends React.Component {
       super(props);
       this.state = {
         input: '',
-        IP: 0
+        IP: 0,
+        visibleMessage: false
       };
       this.handleMessage = this.handleMessage.bind(this);
       this.updateInput = this.updateInput.bind(this);
+      this.toggleVisibleMessage = this.toggleVisibleMessage.bind(this);
+      this.startRecording = this.startRecording.bind(this);
+
       thisRef = this;
       //console.log(allSymptoms);
       allSymptomsToMap();
 
     }
 
+    toggleVisibleMessage()  {
+
+      this.setState({
+        visibleMessage: !this.state.visibleMessage
+      })
+    }
+
     componentDidUpdate() {
 
+    }
 
-
+    startRecording(){
+      fetch('http://localhost:3002/startspeech', {
+        method: 'GET'
+      })
+        .then(function(response) {
+          //console.log(response);
+          firebase.database().ref('Logins/' + thisRef.state.IP).once('value', function(snap) {
+            initialDataLoaded = true;
+          });
+        })
     }
 
     handleMessage() {
       press(this.state.input);
     //  getAPIMedic();
     }
+
 
     updateInput(e) {
       this.setState({input: e.target.value});
@@ -199,19 +221,24 @@ class Conversation extends React.Component {
     render() {
       return(
         <div className="Conversation-Background">
-          <div className="Conversation-LeftPane">
-          </div>
-          <p className="Conversation-LeftPane-Name">Welcome Amr</p>
-          <div className="Conversation-Message">
-            <p>Message</p>
-            <form id="messageForm">
+          <div className="Conversation-Container">
+            <div className="Conversation-View">
+              <p className="Conversation-Bubble-Text">EIGJAEOIGHEIGJAEOIGHOIAEHGOAIEOIAEHGOAIEEIGJAEOIGHOIAEHGOAIEEIGJAEOIGHOIAEHGOAIEEIGJAEOIGHOIAEHGOAIEEIGJAEOIGHOIAEHGOAIEEIGJAEOIGHOIAEHGOAIE</p>
+              <div class="clear"></div>
+              <p className="Conversation-Bubble-TextAI">EIGJAEOIGHEIGJAEOIGHOIAEHGOAIEOIAEHGOAIEEIGJAEOIGHOIAEHGOAIEEIGJAEOIGHOIAEHGOAIEEIGJAEOIGHOIAEHGOAIEEIGJAEOIGHOIAEHGOAIEEIGJAEOIGHOIAEHGOAIE</p>
+            </div>
+            <button className="Conversation-MessageIcon-Holder" onClick={this.toggleVisibleMessage}>
+            <img src="/images/message2.png" className="Conversation-MessageIcon"/>
+            </button>
+            <button className="Conversation-MessageIcon-Holder" onClick={this.startRecording}>
+            <img src="/images/microphone.png" className="Conversation-MessageIcon"/>
+            </button>
+            <form id="messageForm" className="Conversation-MessageForm">
               <label>
-                Enter your text here:
-                <input type="text" name="name" onChange={this.updateInput} />
+                <input type="text" name="name" className={this.state.visibleMessage ? "Conversation-MessageForm-Input" : "Conversation-MessageForm-Hidden"} onChange={this.updateInput} />
               </label>
-              <button type="button" onClick={this.handleMessage}>Enter</button>
+              <button type="button" onClick={this.handleMessage} className={this.state.visibleMessage ? "Conversation-MessageForm-InputButton" : "Conversation-MessageForm-InputButton-Hidden"}>Enter</button>
             </form>
-
           </div>
         </div>
       )
