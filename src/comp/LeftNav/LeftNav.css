@@ -1,7 +1,8 @@
 .ThatCircle {
   display: block;
-  width: 3em;
+  width: 5em;
   padding-top: 1em;
+  border-radius: 50%;
   margin: 0 auto;
 }
 

@@ -16,13 +16,16 @@ var secondDiagnosis;
 var globalHistory;
 var firstRun = true;
 
-function press(input) {
+function press(input, speeched) {
   //var datetime = new Date(Date.now()).toLocaleString().replace(/\//g, "-");
   var datetime = Date.now();
-  firebase.database().ref('Logins/' + thisRef.state.IP + "/Logs/"  + datetime.toString()).set({
-    Message: input,
-    AI: 0
-  });
+  if(!speeched) {
+    firebase.database().ref('Logins/' + thisRef.state.IP + "/Logs/"  + datetime.toString()).set({
+      Message: input,
+      AI: 0,
+      S: 0
+    });
+  }
   userSymptoms = [];
    wordSymptoms = [];
   var parsedInput = input.split('and');
@@ -34,14 +37,16 @@ function press(input) {
       .then(function(response) {
         response.json().then(function(data) {
           console.log("DATA OUTPUT TEXT: " + data.output.text);
+
           var symptom= data.output.text[0];
           symptom = symptom.charAt(0).toUpperCase() + symptom.substring(1);
-          wordSymptoms.push(symptom);
-          console.log(parseInt(symptomMap.get(symptom)))
+
+
+          //console.log(parseInt(symptomMap.get(symptom)))
           if(symptomMap.get(symptom) == null ){
             userSymptoms.push(-1);
           }else{
-
+            wordSymptoms.push(symptom);
             userSymptoms.push(parseInt(symptomMap.get(symptom)));
           }
           if(userSymptoms.length == parsedInput.length){
@@ -59,7 +64,8 @@ function updateFB(sym) {
   var datetime = Date.now();
   firebase.database().ref('Logins/' + thisRef.state.IP + "/Logs/" + datetime.toString()).set({
     Message: sym,
-    AI: 1
+    AI: 1,
+    S: 0
   });
 }
 
@@ -95,13 +101,18 @@ function combination (arr) {
   return result;
 }
 function formSymptomsMessage(){
+  console.log(wordSymptoms)
+  if(wordSymptoms != null && wordSymptoms.length != 0) {
   var res='These are the symptoms that I recognized:\n';
   for(var i in wordSymptoms){
     res += parseInt(i)+1+'. '+wordSymptoms[i]+'\n';
   }
   res+='If these symptoms are wrong, try rephrasing.'
 
-  return res;
+    return res;
+  } else {
+    return "No symptoms were recognized, please rephrase and try again."
+  }
 }
 function formDiagnosisMessage(){
   var str = 'My first diagnosis is that you have '+ firstDiagnosis + '. There are also signs of ' + secondDiagnosis+'.';
@@ -112,11 +123,16 @@ function getAPIMedic() {
   totalDiagnosis=[];
   var symptoms = combination(userSymptoms);
   var count = 1;
+  console.log(symptoms)
+  if(symptoms == null ||symptoms.length==1){
+    updateFB(formSymptomsMessage());
+  }else{
+
   //console.log(symptoms)
   for(var i=1;i<symptoms.length;i++){
     var symptom = symptoms[i];
     //console.log('fetching')
-    var token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImFzc2VlbEBteS55b3JrdS5jYSIsInJvbGUiOiJVc2VyIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvc2lkIjoiMzEwMiIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvdmVyc2lvbiI6IjIwMCIsImh0dHA6Ly9leGFtcGxlLm9yZy9jbGFpbXMvbGltaXQiOiI5OTk5OTk5OTkiLCJodHRwOi8vZXhhbXBsZS5vcmcvY2xhaW1zL21lbWJlcnNoaXAiOiJQcmVtaXVtIiwiaHR0cDovL2V4YW1wbGUub3JnL2NsYWltcy9sYW5ndWFnZSI6ImVuLWdiIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9leHBpcmF0aW9uIjoiMjA5OS0xMi0zMSIsImh0dHA6Ly9leGFtcGxlLm9yZy9jbGFpbXMvbWVtYmVyc2hpcHN0YXJ0IjoiMjAxOC0wMy0yOCIsImlzcyI6Imh0dHBzOi8vc2FuZGJveC1hdXRoc2VydmljZS5wcmlhaWQuY2giLCJhdWQiOiJodHRwczovL2hlYWx0aHNlcnZpY2UucHJpYWlkLmNoIiwiZXhwIjoxNTI3NDEzMTM3LCJuYmYiOjE1Mjc0MDU5Mzd9.ZbMyoC4IaADLbcIOH83nQXvfIq73IQfU0N2VL1NUOG0'
+    var token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImFzc2VlbEBteS55b3JrdS5jYSIsInJvbGUiOiJVc2VyIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvc2lkIjoiMzEwMiIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvdmVyc2lvbiI6IjIwMCIsImh0dHA6Ly9leGFtcGxlLm9yZy9jbGFpbXMvbGltaXQiOiI5OTk5OTk5OTkiLCJodHRwOi8vZXhhbXBsZS5vcmcvY2xhaW1zL21lbWJlcnNoaXAiOiJQcmVtaXVtIiwiaHR0cDovL2V4YW1wbGUub3JnL2NsYWltcy9sYW5ndWFnZSI6ImVuLWdiIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9leHBpcmF0aW9uIjoiMjA5OS0xMi0zMSIsImh0dHA6Ly9leGFtcGxlLm9yZy9jbGFpbXMvbWVtYmVyc2hpcHN0YXJ0IjoiMjAxOC0wMy0yOCIsImlzcyI6Imh0dHBzOi8vc2FuZGJveC1hdXRoc2VydmljZS5wcmlhaWQuY2giLCJhdWQiOiJodHRwczovL2hlYWx0aHNlcnZpY2UucHJpYWlkLmNoIiwiZXhwIjoxNTI3NDIxNDQxLCJuYmYiOjE1Mjc0MTQyNDF9.kA3_hRA4e-7mM54cf7GhgJZ5Zpt52hen9HD5rUnFKcA'
     var gender = "male";
     var year_of_birth = 1996;
 
@@ -138,6 +154,7 @@ function getAPIMedic() {
         })
       })
   }
+}
 
 }
 
@@ -171,8 +188,9 @@ function findDiagnosis(){
   console.log("2: "+secondD+" "+second)
   firstDiagnosis = maxD;
   secondDiagnosis = secondD;
+
   updateFB(formSymptomsMessage());
-  if(firstDiagnosis == null || firstDiagnosis == "" && secondDiagnosis == null || secondDiagnosis == "") {
+  if((firstDiagnosis != null && firstDiagnosis != "") || (secondDiagnosis != null && secondDiagnosis != "")) {
     updateFB(formDiagnosisMessage());
   }
 }
@@ -195,7 +213,8 @@ class Conversation extends React.Component {
         input: '',
         IP: 0,
         visibleMessage: false,
-        currentConvo: []
+        currentConvo: [],
+        listening: false
       };
       this.handleMessage = this.handleMessage.bind(this);
       this.updateInput = this.updateInput.bind(this);
@@ -218,10 +237,14 @@ class Conversation extends React.Component {
         var dbRef = firebase.database().ref('Logins/' + thisRef.state.IP + "/Logs/");
           dbRef.on('value', function(snapshot) {
             thisRef.setState({
-              currentConvo: Object.values(snapshot.val())
+              currentConvo: Object.values(snapshot.val()),
+              listening: false
             })
             globalHistory = snapshot.val();
 
+            if(Object.values(snapshot.val())[Object.values(snapshot.val()).length-1].S == 1) {
+              press(Object.values(snapshot.val())[Object.values(snapshot.val()).length-1].Message, true);
+            }
             //thisRef.render();
 
             //  console.log("This is the latest message: " + Object.values(msgArray)[Object.values(msgArray).length-1].Message);
@@ -252,6 +275,9 @@ class Conversation extends React.Component {
     }
 
     startRecording(){
+      this.setState({
+        listening: true
+      })
       fetch('http://localhost:3002/startspeech', {
         method: 'GET'
       })
@@ -260,12 +286,13 @@ class Conversation extends React.Component {
           /*firebase.database().ref('Logins/' + thisRef.state.IP).once('value', function(snap) {
             initialDataLoaded = true;
           });*/
+          console.log(response);
         })
     }
 
     handleMessage() {
       console.log(this.state.input);
-      press(this.state.input);
+      press(this.state.input, false);
     //  getAPIMedic();
     }
 
@@ -277,7 +304,7 @@ class Conversation extends React.Component {
     handleKeyPress = (e) => {
       if(e.key == 'Enter') {
         this.setState({input: e.target.value});
-        press(this.state.input);
+        press(this.state.input, false);
       }
     }
 
@@ -294,6 +321,7 @@ class Conversation extends React.Component {
             <div className="Conversation-View">
             {
               this.state.currentConvo.map((index, i) => {
+                if(this.state.currentConvo[i] != null && this.state.currentConvo[i].Message != "") {
                 if(this.state.currentConvo[i].AI == 0) {
                 return(
                   <div key={i}>
@@ -309,6 +337,7 @@ class Conversation extends React.Component {
                 </div>
                 )
               }
+              }
               })
             }
 
@@ -321,7 +350,7 @@ class Conversation extends React.Component {
             <button className="Conversation-MessageIcon-Holder" onClick={this.toggleVisibleMessage}>
             <img src="/images/message2.png" className="Conversation-MessageIcon"/>
             </button>
-            <button className="Conversation-MessageIcon-Holder" onClick={this.startRecording}>
+            <button className={this.state.listening ? "Conversation-MessageIcon-Holder-Green" : "Conversation-MessageIcon-Holder"} onClick={this.startRecording}>
             <img src="/images/microphone.png" className="Conversation-MessageIcon"/>
             </button>
             </div>

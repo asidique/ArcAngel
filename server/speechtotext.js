@@ -10,6 +10,8 @@ const speech = require('@google-cloud/speech');
 
 var firebase = require('firebase');
 
+var ip = 0;
+
 var config = {
   apiKey: "AIzaSyDXGdgxjWA4ze1NfgF3hPUBbCciceBfxSw",
   authDomain: "project-red-9c089.firebaseapp.com",
@@ -71,18 +73,31 @@ module.exports = function(app){
           }
           var $ = require("jquery")(window);
           $.getJSON("http://api.ipify.org/?format=json", function(e) {
-            var ip = e.ip.toString().replace(/\./g, "");
+            ip = e.ip.toString().replace(/\./g, "");
 
           //  var datetime = new Date(Date.now()).toLocaleString().replace(/\//g, "-");
+            res.send(data.results[0].alternatives[0].transcript);
             var datetime = Date.now();
             firebase.database().ref('Logins/' + ip + "/Logs/" + datetime).set({
               Message: data.results[0].alternatives[0].transcript,
-              AI: 0
+              AI: 0,
+              S: 1
             });
+            record.stop();
           });
         });
       }
       );
+
+      setTimeout(function () {
+        record.stop();
+        var datetime = Date.now();
+        firebase.database().ref('Logins/' + ip + "/Logs/" + datetime).set({
+          Message: '',
+          AI: 0,
+          S: 0
+        });
+      }, 5000)
 
 
 

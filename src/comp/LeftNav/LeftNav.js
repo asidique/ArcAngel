@@ -50,7 +50,7 @@ class LeftNav extends React.Component {
     return(
       <div className="LeftNav">
       <div className="Profile-Overview">
-        <img src="/images/overview.png" alt="Could not load" className="ThatCircle"/>
+        <img src="/images/profile.png" alt="Could not load" className="ThatCircle"/>
         <p className="LeftNav-Title">ASSEEL SIDIQUE</p>
       </div>
         <div className="LeftNav-Container">

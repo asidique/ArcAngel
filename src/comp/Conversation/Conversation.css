@@ -100,6 +100,15 @@
   transition: 0.5s;
 }
 
+.Conversation-MessageIcon-Holder-Green {
+  width: auto;
+  display: inline-block;
+  background-color: green;
+  border: 0;
+  border-radius: 20px;
+  transition: 0.5s;
+}
+
 .Conversation-MessageIcon-Holder:hover {
   background-color: rgb(11, 147, 246, 0.8);
   border-radius: 10px;
