@@ -16,19 +16,25 @@ class Emergency extends React.Component {
             <p>123 King Street, Toronto, ON</p>
           </div>
         </div>
-        <div className="card">
+        <div className="card card2">
           <div className="card-header">ALLERGIES</div>
-          <div className="card-body">
-            <p>Sinusitis : SEVERE</p>
-            <p>Allergic rhinitis : MODERATE</p>
-            <p>Asthma : SEVERE </p>
+          <div className="card-body3">
+            <p>Sinusitis: </p>
+            <p>Allergic Rhinitis:</p>
+            <p>Asthma: </p>
           </div>
+          <div className="card-body2">
+            <p className="Severe">SEVERE</p>
+            <p className="Moderate">MODERATE</p>
+            <p className="Severe">SEVERE </p>
+          </div>
+
         </div>
         <div className="card">
           <div className="card-header">CURRENT MEDICATION</div>
           <div className="card-body">
             <p>Tylenol : 50mg, twice daily</p>
-            <p>Advil : 50mg, once daily</p>
+            <p>Insulin : 10mg, once daily</p>
           </div>
         </div>
         <div className="card">
@@ -41,14 +47,14 @@ class Emergency extends React.Component {
         <div className="card">
           <div className="card-header">OTHER</div>
           <div className="card-body">
-            <p>Glucomia</p>
-            <p>Diabetes Type A</p>
           </div>
         </div>
         <div className="card">
           <div className="card-header">EMERGENCY CONTACT</div>
           <div className="card-body">
-            <p>Name, Relationship, 905 123 1234 </p>
+            <p>Ms. Sidique</p>
+            <p>Relationship: Wife </p>
+            <p>Phone:  905 123 1234</p>
           </div>
         </div>
       </div>

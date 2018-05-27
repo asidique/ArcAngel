@@ -49,7 +49,10 @@ class LeftNav extends React.Component {
   render() {
     return(
       <div className="LeftNav">
+      <div className="Profile-Overview">
+        <img src="/images/overview.png" alt="Could not load" className="ThatCircle"/>
         <p className="LeftNav-Title">ASSEEL SIDIQUE</p>
+      </div>
         <div className="LeftNav-Container">
           <a href={"/Profiles/"+this.props.UID+"/Overview"}>
           <div className="LeftNav-Item">

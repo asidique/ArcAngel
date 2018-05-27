@@ -1,14 +1,20 @@
+.ThatCircle {
+  display: block;
+  width: 3em;
+  padding-top: 1em;
+  margin: 0 auto;
+}
+
 .LeftNav {
   position: absolute;
   display: block;
   width: 15em;
-  height: 100%;
+  height: auto;
   background-color: rgb(230,230,230);
 }
 
 .LeftNav-Title {
-  padding: 1em;
-  padding-top: 2em;
+  padding-top: 1em;
   text-align: center;
   font-family: 'Lato-Regular'
 }
@@ -64,7 +70,10 @@
   background-color: transparent;
   border: none;
 }
-
+.Profile-Overview{
+/*  display: inline-block;
+  */
+}
 .input-group-append:hover {
   background-color: rgb(210, 210, 210);
 }

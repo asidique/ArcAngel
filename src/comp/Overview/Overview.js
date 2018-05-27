@@ -13,7 +13,7 @@ class Overview extends React.Component {
           <div className="card-header">Personal Information</div>
           <div className="card-body">
             <p>Name: Asseel Sidique</p>
-            <p>Birthdate: January 1st, 1996 (21)</p>
+            <p>Birthdate: January 1st, 1996 (22)</p>
             <p>Gender: Male</p>
           </div>
         </div>
@@ -33,7 +33,7 @@ class Overview extends React.Component {
         <div className="card">
           <div className="card-header">Reminders</div>
           <div className="card-body">
-            <p>Take 2 tablets of XYZ with food today</p>
+            <p>Take 2 tablets of Tylenol with food today</p>
             <p>Eat food with lots of iron</p>
           </div>
         </div>
