@@ -1,7 +1,7 @@
 import React from 'react'
 import {  Switch, Route } from 'react-router-dom'
 import Welcome from './comp/Welcome/Welcome'
-import Conversation from './comp/Conversation/Conversation'
+import Profile from './comp/Profile/Profile'
 
 class Main extends React.Component {
   render() {
@@ -9,7 +9,7 @@ class Main extends React.Component {
       <main>
         <Switch>
           <Route path="/Home" component={Welcome} />
-          <Route path="/Conversation/:uid" component={Conversation}/>
+          <Route path="/Profiles/:uid" component={Profile}/>
         </Switch>
       </main>
     )

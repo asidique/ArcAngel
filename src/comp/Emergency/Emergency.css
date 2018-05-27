@@ -1,0 +1,10 @@
+.EmergencyPage {
+  margin-left: 15em;
+}
+
+.EmergencyPage .card {
+  display: inline-block;
+  vertical-align: top;
+  margin: 2em;
+  width: 25em;
+}

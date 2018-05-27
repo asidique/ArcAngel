@@ -175,13 +175,13 @@ class Conversation extends React.Component {
       this.setState({input: e.target.value});
     }
 
+    /*  <Profile IP={this.state.IP} />*/
 
 
     render() {
       return(
         <div className="Conversation-Background">
           <div className="Conversation-LeftPane">
-            <Profile IP={this.state.IP} />
           </div>
           <p className="Conversation-LeftPane-Name">Welcome Amr</p>
           <div className="Conversation-Message">
