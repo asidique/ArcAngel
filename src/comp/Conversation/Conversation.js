@@ -201,9 +201,9 @@ class Conversation extends React.Component {
       })
         .then(function(response) {
           //console.log(response);
-          firebase.database().ref('Logins/' + thisRef.state.IP).once('value', function(snap) {
+        /*  firebase.database().ref('Logins/' + thisRef.state.IP).once('value', function(snap) {
             initialDataLoaded = true;
-          });
+          });*/
         })
     }
 
