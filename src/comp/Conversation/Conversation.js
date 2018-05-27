@@ -17,6 +17,11 @@ var globalHistory;
 var firstRun = true;
 
 function press(input) {
+  var datetime = new Date(Date.now()).toLocaleString().replace(/\//g, "-");
+  firebase.database().ref('Logins/' + thisRef.state.IP + "/Logs/" + datetime.toString()).set({
+    Message: input,
+    AI: 0
+  });
   userSymptoms = [];
    wordSymptoms = [];
   var parsedInput = input.split('and');
@@ -47,6 +52,15 @@ function press(input) {
   }
 
 }
+
+function updateFB(sym) {
+  var datetime = new Date(Date.now()).toLocaleString().replace(/\//g, "-");
+
+  firebase.database().ref('Logins/' + thisRef.state.IP + "/Logs/" + datetime.toString()).set({
+    Message: sym,
+    AI: 1
+  });
+}
 function removeUnkownSymptoms(){
 for(var i in userSymptoms){
   if(userSymptoms[i]==-1){
@@ -76,18 +90,19 @@ function combination (arr) {
     }
     result.push(temp)
   }
-  return result
+  return result;
 }
 function formSymptomsMessage(){
-  var res='These are the symptoms that I recognized:<br>';
+  var res='These are the symptoms that I recognized:\n';
   for(var i in wordSymptoms){
-    res += parseInt(i)+1+'. '+wordSymptoms[i]+'<br>';
+    res += parseInt(i)+1+'. '+wordSymptoms[i]+'\n';
   }
   res+='If these symptoms are wrong, try rephrasing.'
-  console.log(res);
+
+  return res;
 }
 function formDiagnosisMessage(){
-  var str = 'You might have '+ firstDiagnosis + ' or ' + secondDiagnosis+'.';
+  var str = 'My first diagnosis is that you have '+ firstDiagnosis + '. There are also signs of ' + secondDiagnosis+'.';
   console.log(str);
 }
 
@@ -99,7 +114,7 @@ function getAPIMedic() {
   for(var i=1;i<symptoms.length;i++){
     var symptom = symptoms[i];
     //console.log('fetching')
-    var token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImFzc2VlbEBteS55b3JrdS5jYSIsInJvbGUiOiJVc2VyIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvc2lkIjoiMzEwMiIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvdmVyc2lvbiI6IjIwMCIsImh0dHA6Ly9leGFtcGxlLm9yZy9jbGFpbXMvbGltaXQiOiI5OTk5OTk5OTkiLCJodHRwOi8vZXhhbXBsZS5vcmcvY2xhaW1zL21lbWJlcnNoaXAiOiJQcmVtaXVtIiwiaHR0cDovL2V4YW1wbGUub3JnL2NsYWltcy9sYW5ndWFnZSI6ImVuLWdiIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9leHBpcmF0aW9uIjoiMjA5OS0xMi0zMSIsImh0dHA6Ly9leGFtcGxlLm9yZy9jbGFpbXMvbWVtYmVyc2hpcHN0YXJ0IjoiMjAxOC0wMy0yOCIsImlzcyI6Imh0dHBzOi8vc2FuZGJveC1hdXRoc2VydmljZS5wcmlhaWQuY2giLCJhdWQiOiJodHRwczovL2hlYWx0aHNlcnZpY2UucHJpYWlkLmNoIiwiZXhwIjoxNTI3NDA0NzExLCJuYmYiOjE1MjczOTc1MTF9._JYvQF4Zr6DKYMOdgZo09M4uRx2URacpx9_JKip0nG4'
+    var token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImFzc2VlbEBteS55b3JrdS5jYSIsInJvbGUiOiJVc2VyIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvc2lkIjoiMzEwMiIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvdmVyc2lvbiI6IjIwMCIsImh0dHA6Ly9leGFtcGxlLm9yZy9jbGFpbXMvbGltaXQiOiI5OTk5OTk5OTkiLCJodHRwOi8vZXhhbXBsZS5vcmcvY2xhaW1zL21lbWJlcnNoaXAiOiJQcmVtaXVtIiwiaHR0cDovL2V4YW1wbGUub3JnL2NsYWltcy9sYW5ndWFnZSI6ImVuLWdiIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9leHBpcmF0aW9uIjoiMjA5OS0xMi0zMSIsImh0dHA6Ly9leGFtcGxlLm9yZy9jbGFpbXMvbWVtYmVyc2hpcHN0YXJ0IjoiMjAxOC0wMy0yOCIsImlzcyI6Imh0dHBzOi8vc2FuZGJveC1hdXRoc2VydmljZS5wcmlhaWQuY2giLCJhdWQiOiJodHRwczovL2hlYWx0aHNlcnZpY2UucHJpYWlkLmNoIiwiZXhwIjoxNTI3NDEzMTM3LCJuYmYiOjE1Mjc0MDU5Mzd9.ZbMyoC4IaADLbcIOH83nQXvfIq73IQfU0N2VL1NUOG0'
     var gender = "male";
     var year_of_birth = 1996;
 
@@ -154,6 +169,7 @@ function findDiagnosis(){
   console.log("2: "+secondD+" "+second)
   firstDiagnosis = maxD;
   secondDiagnosis = secondD;
+  updateFB(formSymptomsMessage());
 
 }
 function allSymptomsToMap(){
@@ -181,7 +197,7 @@ class Conversation extends React.Component {
       this.updateInput = this.updateInput.bind(this);
       this.toggleVisibleMessage = this.toggleVisibleMessage.bind(this);
       this.startRecording = this.startRecording.bind(this);
-
+      this.handleKeyPress = this.handleKeyPress.bind(this);
       thisRef = this;
       //console.log(allSymptoms);
       allSymptomsToMap();
@@ -244,6 +260,7 @@ class Conversation extends React.Component {
     }
 
     handleMessage() {
+      console.log(this.state.input);
       press(this.state.input);
     //  getAPIMedic();
     }
@@ -251,6 +268,13 @@ class Conversation extends React.Component {
 
     updateInput(e) {
       this.setState({input: e.target.value});
+    }
+
+    handleKeyPress = (e) => {
+      if(e.key == 'Enter') {
+        this.setState({input: e.target.value});
+        press(this.state.input);
+      }
     }
 
     /*  <Profile IP={this.state.IP} />
@@ -266,12 +290,21 @@ class Conversation extends React.Component {
             <div className="Conversation-View">
             {
               this.state.currentConvo.map((index, i) => {
+                if(this.state.currentConvo[i].AI == 0) {
                 return(
                   <div key={i}>
                   <p className="Conversation-Bubble-Text">{this.state.currentConvo[i].Message}</p>
                   <div className="clear"/>
                   </div>
                 )
+              } else {
+                return(
+                <div key={i}>
+                <p className="Conversation-Bubble-TextAI">{this.state.currentConvo[i].Message}</p>
+                <div className="clear"/>
+                </div>
+                )
+              }
               })
             }
 
@@ -282,12 +315,10 @@ class Conversation extends React.Component {
             <button className="Conversation-MessageIcon-Holder" onClick={this.startRecording}>
             <img src="/images/microphone.png" className="Conversation-MessageIcon"/>
             </button>
-            <form id="messageForm" className="Conversation-MessageForm">
-              <label>
-                <input type="text" name="name" className={this.state.visibleMessage ? "Conversation-MessageForm-Input" : "Conversation-MessageForm-Hidden"} onChange={this.updateInput} />
-              </label>
+            <div id="messageForm" type="text" className="Conversation-MessageForm">
+                <input type="text"  onKeyPress={this.handleKeyPress}  name="name" className={this.state.visibleMessage ? "Conversation-MessageForm-Input" : "Conversation-MessageForm-Hidden"} onChange={this.updateInput} />
               <button type="button" onClick={this.handleMessage} className={this.state.visibleMessage ? "Conversation-MessageForm-InputButton" : "Conversation-MessageForm-InputButton-Hidden"}>Enter</button>
-            </form>
+            </div>
           </div>
         </div>
       )
