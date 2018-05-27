@@ -8,9 +8,14 @@ var symptomMap = null;
 var userSymptoms = [];
 var totalDiagnosis=[];
 var diagnosisMap = null;
+var wordSymptoms = [];
+var firstDiagnosis;
+var secondDiagnosis;
+
 function press(input) {
   console.log(input);
   userSymptoms = [];
+   wordSymptoms = [];
   var parsedInput = input.split('and');
   for(var i in parsedInput){
     input = parsedInput[i];
@@ -22,6 +27,7 @@ function press(input) {
           console.log(data.output.text);
           var symptom= data.output.text[0];
           symptom = symptom.charAt(0).toUpperCase() + symptom.substring(1);
+          wordSymptoms.push(symptom);
           console.log(parseInt(symptomMap.get(symptom)))
           if(symptomMap.get(symptom) == null ){
             userSymptoms.push(-1);
@@ -68,6 +74,16 @@ function combination (arr) {
     result.push(temp)
   }
   return result
+}
+function formSymptomsMessage(){
+  var res='These are the symptoms that I recognized:<br>';
+  for(var i in wordSymptoms){
+    res += parseInt(i)+1+'. '+wordSymptoms[i]+'<br>';
+  }
+  res+='If these symptoms are wrong, try rephrasing.'
+}
+function formDiagnosisMessage(){
+
 }
 
 function getAPIMedic() {
@@ -132,6 +148,8 @@ function findDiagnosis(){
   }
   console.log("1: "+maxD+" "+max)
   console.log("2: "+secondD+" "+second)
+  firstDiagnosis = maxD;
+  secondDiagnosis = secondD;
 }
 function allSymptomsToMap(){
   symptomMap = new Map();
