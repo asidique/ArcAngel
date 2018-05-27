@@ -36,6 +36,7 @@ class Appointments extends React.Component {
             <button className="btn btn-danger btn-left">Cancel</button>
             <button className="btn btn-warning">Reschedule</button>
           </div>
+          
         </div>
         <div className="card">
           <div className="card-header">Previous Appointments</div>
