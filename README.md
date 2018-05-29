@@ -1,6 +1,6 @@
 # ArcAngel - AI Chatbot for Medical Information
 
-<img src="https://github.com/asidique/Project-Blue/blob/master/public/Images/logo.png" alt="Drawing" width="200" style="text-align: center;"/>
+<img src="https://github.com/asidique/Arkangel/blob/master/public/images/arkangel.png" alt="Drawing" width="200" style="text-align: center;"/>
 
 ArcAngel is an AI chatbot that can give you a possible diagnosis given a list of symptoms. You can communicate with ArcAngel via the web application through text or speech. The web application features an easy to use home page with several features including Lab Results, Emergency Tab, Prescription Tab and more.
 
