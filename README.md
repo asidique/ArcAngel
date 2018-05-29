@@ -28,7 +28,7 @@ This page shows all the information pertaining to a users medical information in
 
 ### Appointments
 
-<img src="https://github.com/asidique/Arkangel/blob/master/public/images/Appointments.png" alt="Drawing" width="500"/>
+<img src="https://github.com/asidique/Arkangel/blob/master/public/images/Appointment.png" alt="Drawing" width="500"/>
 
 This page allows users to communicate to their doctor to book an appointment. A doctor with access to an ArcAngel system can reply by confirming the appointment. Appointments can be cancelled or rescheduled by both the user and the doctor.
 
@@ -47,4 +47,4 @@ ArcAngel is the AI used to talk to users and give a soft diagnosis. This diagnos
 <img src="https://i2.wp.com/ionicacademy.com/wp-content/uploads/2017/06/firebase-circle.png?ssl=1" alt="Drawing" width="100"/>
 <img src="https://is2-ssl.mzstatic.com/image/thumb/Music71/v4/2f/36/49/2f36498c-4811-9ff9-4b7c-4d71631e404e/source/1200x630bb.jpg" alt="Drawing" width="100"/>
 <img src="https://thiagoviola.files.wordpress.com/2017/10/cloud-ibm.png?w=579&h=167" alt="Drawing" width="200"/>
-<img src="https://github.com/asidique/Arkangel/blob/master/public/images/APIMedic.png" alt="Drawing" width="100"/>
+<img src="https://github.com/asidique/Arkangel/blob/master/public/images/Apimedic.png" alt="Drawing" width="100"/>
