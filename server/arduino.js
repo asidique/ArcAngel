@@ -11,17 +11,19 @@ var port = new SerialPort('/dev/cu.usbmodem1411', {
 var firebase = require('firebase');
 
 var config = {
-  apiKey: "AIzaSyDXGdgxjWA4ze1NfgF3hPUBbCciceBfxSw",
-  authDomain: "project-red-9c089.firebaseapp.com",
-  databaseURL: "https://project-red-9c089.firebaseio.com",
-  projectId: "project-red-9c089",
+  apiKey: "API KEY",
+  authDomain: "Project Domain",
+  databaseURL: "Database URL",
+  projectId: "Project ID",
   storageBucket: "",
-  messagingSenderId: "664289493194"
+  messagingSenderId: "msg id"
 };
+
+//get the info above from firebase
 
 firebase.initializeApp(config);
 
-firebase.auth().signInWithEmailAndPassword("sidiqueafg@gmail.com", "projectred").catch(function(error) {
+firebase.auth().signInWithEmailAndPassword("email@gmail.com", "projectred").catch(function(error) {
   // Handle Errors here.
   var errorCode = error.code;
   var errorMessage = error.message;
