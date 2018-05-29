@@ -13,17 +13,17 @@ var firebase = require('firebase');
 var ip = 0;
 
 var config = {
-  apiKey: "AIzaSyDXGdgxjWA4ze1NfgF3hPUBbCciceBfxSw",
-  authDomain: "project-red-9c089.firebaseapp.com",
-  databaseURL: "https://project-red-9c089.firebaseio.com",
-  projectId: "project-red-9c089",
+  apiKey: "Api key",
+  authDomain: "Api domain",
+  databaseURL: "Database Url",
+  projectId: "Project ID",
   storageBucket: "",
-  messagingSenderId: "664289493194"
+  messagingSenderId: "Msg ID"
 };
 
 firebase.initializeApp(config);
 
-firebase.auth().signInWithEmailAndPassword("sidiqueafg@gmail.com", "projectred").catch(function(error) {
+firebase.auth().signInWithEmailAndPassword("email@gmail.com", "projectred").catch(function(error) {
   // Handle Errors here.
   var errorCode = error.code;
   var errorMessage = error.message;
