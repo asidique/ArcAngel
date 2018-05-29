@@ -8,8 +8,8 @@ app.use(bodyParser.json());*/
 
 module.exports = function(app){
   var assistant = new watson.AssistantV1({
-    username: 'a5a11b4e-2d70-4424-8c07-f43c27d8be41',
-    password: 'TWOL7OCOk8Uy',
+    username: 'ENTER USER NAME HERE',
+    password: 'ENTER PASSWORD HERE',
     version: watson.ConversationV1.VERSION_DATE_2017_05_26
   });
 
@@ -18,7 +18,7 @@ module.exports = function(app){
     //Possibly parse input to something... don't know yet
 
     assistant.message({
-      workspace_id: '5a5da6e5-685a-45d3-b8a2-9ef125a14afd',
+      workspace_id: 'WORKSPACE',
       input: {'text': input}
     },  function(err, response) {
       if (err)
